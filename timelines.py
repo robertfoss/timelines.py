@@ -22,7 +22,7 @@ line_style = ""
 line_border_margin = 70
 line_x1 = line_border_margin / 2.0
 line_x2 = svg_x - line_border_margin
-line_len = svg_x - 2 * line_border_margin
+line_len = svg_x - line_x1 - (svg_x - line_x2)
 line_grade_height = 15
 
 grade_width = line_width * 0.7
@@ -76,13 +76,13 @@ def writeTimelineBase(svg_document, span):
 
     year_start = int(span[0])
     year_end = int(span[1])
-    nbr_grades = year_end - year_start - 1
+    nbr_grades = year_end - year_start
 
     if nbr_grades < 2:
         return
 
     for pos in range(0, nbr_grades):
-        x_pos = line_border_margin + (line_len/nbr_grades) * pos
+        x_pos = line_x1 + (line_len/nbr_grades) * pos
         line = svg_document.line(start = (x_pos, svg_y_mid - grade_height),
                                  end   = (x_pos, svg_y_mid + grade_height),
                                  stroke_width = grade_width,
@@ -130,7 +130,7 @@ def writeTimelineItem(svg_document, span, item, color):
     
     print("writeTimelineItem: Year: {}, Month: {}, Monthspan: {}, Monthidx: {}, item_x_pos: {}".format(item_year, item_month, month_span, month_idx, item_x_pos))
 
-    svg_document.add(svg_document.line(start = (peg_x_pos, svg_y_mid - line_grade_height),
+    svg_document.add(svg_document.line(start = (peg_x_pos, svg_y_mid - line_grade_height*1.1),
                                        end   = (peg_x_pos, svg_y_mid),
                                        stroke_width = grade_width,
                                        stroke = color,
@@ -330,7 +330,7 @@ timelines = [
                 ("Reverse Engineering", [
                     ("2012-12", "etna_viv", "Initial commit"),
                     ("2013-03", "etna_viv", "GC2000"),
-                    ("2016-10", "etna_viv", "GC3000"),
+                    ("2016-01", "etna_viv", "GC3000"),
                     ("2017-10", "etna_viv", "GC7000"),
                 ]),
         ]
