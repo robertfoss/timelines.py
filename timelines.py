@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import svgwrite
+from datetime import datetime
 
 svg_x = 1000
 svg_y = 225
@@ -13,13 +14,14 @@ color_green = "#43c200"
 color_purple = "#5c3dcc"
 color_orange = "#e3673e"
 color_blue = "#40D8D9"
+color_red = "#FF0900"
 
-color_list = [color_green, color_orange, color_blue]
+color_list = [color_green, color_orange, color_blue, color_red]
 
 line_width = 8
 line_color = color_purple
 line_style = ""
-line_border_margin = 70
+line_border_margin = 80
 line_x1 = line_border_margin / 2.0
 line_x2 = svg_x - line_border_margin
 line_len = svg_x - line_x1 - (svg_x - line_x2)
@@ -45,7 +47,7 @@ def addTextAngle(svg_document, text, angle, pos_x, pos_y, font_sz=21, color=colo
         text_anchor = "start",
         dominant_baseline = "middle"
     )
-                             
+
     textGroup = svgwrite.container.Group(
         transform = "rotate(%d, %s, %s)" % (angle, pos_x, pos_y)
     )
@@ -68,9 +70,9 @@ def writeTimelineBase(svg_document, span):
                                        stroke_width = line_width,
                                        stroke = line_color,
                                        stroke_linecap = "round"))
-                                       
-    addTextAngle(svg_document, span[0], text_angle, line_x1, svg_y_mid - line_grade_height - 10)
-    addTextAngle(svg_document, span[1], text_angle, line_x2, svg_y_mid - line_grade_height - 10)
+
+    addTextAngle(svg_document, span[0], -90, line_x1-15, svg_y_mid - line_grade_height + 38)
+    addTextAngle(svg_document, span[1], -90, line_x2+25, svg_y_mid - line_grade_height + 38)
     label_x_pos_prev = line_x1
     peg_x_pos_prev = line_x1
 
@@ -99,7 +101,7 @@ def writeTimelineItem(svg_document, span, item, color):
     span_end = int(span[1])
     item_year = int(item_time.split("-")[0])
     item_month = int(item_time.split("-")[1])
-    
+
     if item_year < span_start:
         return
 
@@ -107,16 +109,16 @@ def writeTimelineItem(svg_document, span, item, color):
 
     nbr_years =  span_end - span_start
     month_span = nbr_years * 12;
-    
+
     month_idx = (item_year-span_start) * 12 + item_month - 1
-    
+
     month_pos = (1.0/(1.0*month_span)) * month_idx
     x_offset = month_pos * line_len
     item_x_pos = line_x1 + x_offset
-    
+
     global label_x_pos_prev
     global peg_x_pos_prev
-    
+
     label_x_pos = item_x_pos
     if label_x_pos - label_x_pos_prev < label_margin:
         label_x_pos = label_x_pos_prev + label_margin
@@ -127,7 +129,7 @@ def writeTimelineItem(svg_document, span, item, color):
 
     label_x_pos_prev = label_x_pos
     peg_x_pos_prev = peg_x_pos
-    
+
     print("writeTimelineItem: Year: {}, Month: {}, Monthspan: {}, Monthidx: {}, item_x_pos: {}".format(item_year, item_month, month_span, month_idx, item_x_pos))
 
     svg_document.add(svg_document.line(start = (peg_x_pos, svg_y_mid - line_grade_height*1.1),
@@ -137,16 +139,16 @@ def writeTimelineItem(svg_document, span, item, color):
                                        stroke_linecap = "round"))
     y_margin = 20
     addTextAngle(svg_document, item[2], text_angle, label_x_pos, svg_y_mid - y_margin)
-    
+
 
 def writeTimelineProject(svg_document, span, project, project_nbr, color):
     print("writeTimelineProject: Project #{}, color: {} - {}".format(project_nbr, color, project))
-    
+
     global label_x_pos_prev
     global peg_x_pos_prev
     label_x_pos_prev = line_x1
     peg_x_pos_prev = line_x1
-    
+
     for item in project[1]:
         writeTimelineItem(svg_document, span, item, color)
 
@@ -158,7 +160,7 @@ def writeTimelineVendor(span, vendor):
     vendor_projects = vendor[1]
     print("Vendor name: {}".format(vendor_name))
     print("Vendor projects: {}".format(vendor_projects))
-    
+
     for project in vendor_projects:
         project_name = project[0]
         project_events = project[1]
@@ -166,7 +168,7 @@ def writeTimelineVendor(span, vendor):
         # If timeline has no events, don't create the file
         if (len(project_events) == 0):
             continue
-        
+
         filename = "timeline_{}_{}.svg".format(vendor_name.lower(), project_name.lower().replace(" ", "_"))
         print("Output file: {}".format(filename))
         svg_document = svgwrite.Drawing(filename = filename,
@@ -182,7 +184,77 @@ def writeTimelineVendor(span, vendor):
 
         print("\n{}\n\n".format(svg_document.tostring()))
         svg_document.save()
-    
+
+def getEntryInt(entry):
+    date = entry[0]
+    dateInt = int(date.split('-')[0]) * 12 + int(date.split('-')[1])
+    print("getEntryInt() {} {} - {}".format(entry[2],entry[0], dateInt))
+    return dateInt
+
+def firstEntry(entryA, entryB):
+    dateIntA = getEntryInt(entryA)
+    dateIntB = getEntryInt(entryB)
+    if dateIntA < dateIntB:
+        return entryA
+    else:
+        return entryB
+
+def combineTimelines(vendor, projectA, projectB, projectName):
+    timelines = dict()
+    projectAEntry = None
+    projectBEntry = None
+
+    for project in vendor[1]:
+        if project[0] == projectA:
+            projectAEntry = project
+            timelines[projectA] = project[1]
+            print("combineTimelines() Found {} project in vendor {}".format(projectA, vendor[0]))
+        if project[0] == projectB:
+            projectBEntry = project
+            timelines[projectB] = project[1]
+            print("combineTimelines() Found {} project in vendor {}".format(projectB, vendor[0]))
+
+    print("combineTimelines() found {} matching timelines".format(len(timelines)))
+    if len(timelines) != 2:
+        # If we havent found project A & B
+        return vendor
+
+    entrySet = set()
+    for entry in timelines[projectA] + timelines[projectB]:
+        entrySet.add(entry[2])
+
+    newProjectEntries = []
+    for entry in entrySet:
+        print("Looking for \'{}\'".format(entry))
+        newEntry = ("9999-9999", "N/A", entry)
+        for entryA in timelines[projectA]:
+            if entry == entryA[2]:
+                # We've found an with the same descr
+                newEntry = firstEntry(newEntry, entryA)
+        for entryB in timelines[projectB]:
+            if entry == entryB[2]:
+                newEntry = firstEntry(newEntry, entryB)
+        newEntry = (newEntry[0], "N/A", newEntry[2])
+        print("NewEntry: {}".format(newEntry))
+        newProjectEntries.append(newEntry)
+
+    newProjectEntries.sort(key=getEntryInt)
+    newProject = (projectName, newProjectEntries)
+    retval = (vendor[0], [newProject, projectAEntry, projectBEntry])
+    print("*****\nOld Vendor: {}\n-----\nNew Vendor: {}*****\n\n".format(vendor, retval))
+    return retval
+
+#### TODO: Write some code to combine kernel and mesa timelines
+
+
+def createCombinedTimelines(timelines):
+    newTimelines = []
+    for vendor in timelines:
+        newTimeline = combineTimelines(vendor, "Kernel", "Mesa", "Kernel and Mesa")
+        newTimelines.append(newTimeline)
+    return newTimelines
+
+
 def writeTimelines(timelines):
     span = ["2009", "2019"]
 
@@ -210,17 +282,17 @@ timelines = [
                     ("2013-10", "radeonsi", "Sea Islands"),
                     ("2015-11", "radeonsi", "Polaris 10 & 11"),
                     ("2016-12", "radeonsi", "Polaris 12"),
-                    ("2016-12", "radeonsi", "Vega"),
+                    ("2016-12", "radeonsi", "Vega 10"),
                 ]),
         ]
     ),
     ("ARM", [
                 ("Kernel", [
-                
+
                 ]),
 
                 ("Mesa", [
-                
+
                 ]),
                 ("Reverse Engineering", [
                     ("2017-04", "panfrost", "Gxx Documentation"),
@@ -239,7 +311,7 @@ timelines = [
                     ("2017-02", "vc5", "VC5"),
                 ]),
                 ("Reverse Engineering", [
-                
+
                 ]),
         ]
     ),
@@ -252,7 +324,7 @@ timelines = [
 
                 ]),
                 ("Reverse Engineering", [
-                
+
                 ]),
         ]
     ),
@@ -273,7 +345,7 @@ timelines = [
                     ("2017-05", "i915", "Gen10 Cannonlake"),
                 ]),
                 ("Reverse Engineering", [
-                
+
                 ]),
         ]
     ),
@@ -293,7 +365,10 @@ timelines = [
                     ("2016-07", "nouveau", "Pascal"),
                 ]),
                 ("Reverse Engineering", [
-                
+                    ("2010-04", "envytools", "Fermi"),
+                    ("2012-03", "envytools", "Kepler"),
+                    ("2014-06", "envytools", "Maxwell"),
+                    ("2016-06", "envytools", "Pascal"),
                 ]),
         ]
     ),
@@ -310,10 +385,12 @@ timelines = [
                     ("2012-10", "freedreno", "A200"),
                     ("2013-05", "freedreno", "A300"),
                     ("2014-07", "freedreno", "A400"),
-                    ("2016-11", "freedreno", "A600"),
+                    ("2016-11", "freedreno", "A500"),
                 ]),
                 ("Reverse Engineering", [
-                
+                    ("2013-03", "envytools", "A200/A300"),
+                    ("2013-11", "envytools", "A400"),
+                    ("2016-04", "envytools", "A500"),
                 ]),
         ]
     ),
@@ -339,9 +416,10 @@ timelines = [
 
 
 def main():
+    global timelines
+    timelines = createCombinedTimelines(timelines)
     writeTimelines(timelines)
 
 
 if __name__ == "__main__":
     main()
-
