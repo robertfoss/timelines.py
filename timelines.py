@@ -217,7 +217,7 @@ def combineTimelines(vendor, projectA, projectB, projectName):
     print("combineTimelines() found {} matching timelines".format(len(timelines)))
     if len(timelines) != 2:
         # If we havent found project A & B
-        return vendor
+        return None
 
     entrySet = set()
     for entry in timelines[projectA] + timelines[projectB]:
@@ -240,8 +240,8 @@ def combineTimelines(vendor, projectA, projectB, projectName):
 
     newProjectEntries.sort(key=getEntryInt)
     newProject = (projectName, newProjectEntries)
-    retval = (vendor[0], [newProject, projectAEntry, projectBEntry])
-    print("*****\nOld Vendor: {}\n-----\nNew Vendor: {}*****\n\n".format(vendor, retval))
+    retval = newProject
+    print("*****\nNew Project: {}*****\n\n".format(vendor, retval))
     return retval
 
 #### TODO: Write some code to combine kernel and mesa timelines
@@ -250,8 +250,16 @@ def combineTimelines(vendor, projectA, projectB, projectName):
 def createCombinedTimelines(timelines):
     newTimelines = []
     for vendor in timelines:
-        newTimeline = combineTimelines(vendor, "Kernel", "Mesa", "Kernel and Mesa")
-        newTimelines.append(newTimeline)
+        newProject = combineTimelines(vendor, "Kernel", "Mesa", "Kernel and Mesa")
+        if newProject != None:
+            print("Added combined project")
+            vendor[1].append(newProject)
+            print("*****\nNew Project: {}*****\n\n".format(vendor))
+
+        else:
+            print("Did not add combined project")
+        newTimelines.append(vendor)
+
     return newTimelines
 
 
