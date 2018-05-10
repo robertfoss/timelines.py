@@ -70,8 +70,8 @@ def writeTimelineBase(svg_document, span):
                                        stroke = line_color,
                                        stroke_linecap = "round"))
 
-    addTextAngle(svg_document, span[0], -90, line_x1-15, svg_y_mid - line_grade_height + 38)
-    addTextAngle(svg_document, span[1], -90, line_x2+25, svg_y_mid - line_grade_height + 38)
+    addTextAngle(svg_document, span[0], -90, line_x1-13, svg_y_mid - line_grade_height + 38)
+    addTextAngle(svg_document, span[1], -90, line_x2+27, svg_y_mid - line_grade_height + 38)
     label_x_pos_prev = line_x1
     peg_x_pos_prev = line_x1
 
@@ -137,7 +137,7 @@ def writeTimelineItem(svg_document, span, item, color):
                                        stroke = color,
                                        stroke_linecap = "round"))
     y_margin = 20
-    addTextAngle(svg_document, item[2], text_angle, label_x_pos, svg_y_mid - y_margin)
+    addTextAngle(svg_document, item[2], text_angle, label_x_pos, svg_y_mid - y_margin - 3)
 
 
 def writeTimelineProject(svg_document, span, project, project_nbr, color):
