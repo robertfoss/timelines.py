@@ -44,8 +44,7 @@ def addTextAngle(svg_document, text, angle, pos_x, pos_y, font_sz=21, color=colo
         text,
         insert = (pos_x, pos_y),
         style = "fill: {}; font-size: {}px; font-weight: bold; font-family: Liberation Sans;".format(color, font_sz),
-        text_anchor = "start",
-        dominant_baseline = "middle"
+        text_anchor = "start"
     )
 
     textGroup = svgwrite.container.Group(
