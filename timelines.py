@@ -305,7 +305,7 @@ timelines = [
                 ("Reverse Engineering", [
                     ("2017-04", "panfrost", "Gxx Documentation"),
                     ("2017-06", "panfrost", "Gxx Shader Loader"),
-                    ("2018-02", "chai", "T7xx Initial 3D"),
+                    ("2018-02", "panfrost", "T7xx Initial 3D"),
                 ]),
         ]
     ),
