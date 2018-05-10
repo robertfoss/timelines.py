@@ -424,6 +424,19 @@ timelines = [
                 ]),
         ]
     ),
+
+    ("imx8qm", [
+                ("i.MX 8 Kernel", [
+                    ("2016-11-30", "imx8",   "i.MX8 LPI2C support"),
+                    ("2018-03-28", "imx8qm", "i.MX8 SATA support"),
+                ]),
+                ("i.MX 8 U-Boot", [
+                    ("2018-01-10", "imx8m", "Initial support"),
+                    ("2018-01-10", "imx8m", "Network Support"),
+                    ("2018-01-10", "imx8m", "GPIO Support"),
+                ]),
+        ]
+    ),
 ]
 
 
