@@ -361,7 +361,7 @@ timelines = [
     ),
     ("NVidia", [
                 ("Kernel", [
-                    ("2009-11", "nouveau", "Driver introduced"),
+                    ("2009-11", "nouveau", "Driver added"),
                     ("2010-09", "nouveau", "Fermi"),
                     ("2012-03", "nouveau", "Kepler"),
                     ("2014-02", "nouveau", "Maxwell"),
@@ -374,6 +374,7 @@ timelines = [
                     ("2014-07", "nouveau", "Maxwell"),
                     ("2016-07", "nouveau", "Pascal"),
                 ]),
+
                 ("Reverse Engineering", [
                     ("2010-04", "envytools", "Fermi"),
                     ("2012-03", "envytools", "Kepler"),
@@ -384,7 +385,7 @@ timelines = [
     ),
     ("Qualcomm", [
                 ("Kernel", [
-                    ("2013-06", "msm", "Driver introduced"),
+                    ("2013-06", "msm", "Driver added"),
                     ("2013-06", "msm", "A200"),
                     ("2013-07", "msm", "A300"),
                     ("2014-09", "msm", "A400"),
@@ -406,12 +407,12 @@ timelines = [
     ),
     ("Vivante", [
                 ("Kernel", [
-                    ("2015-12", "etnaviv", "Driver introduced"),
+                    ("2015-12", "etnaviv", "Driver added"),
                     ("2016-01", "etnaviv", "GC3000"),
                 ]),
 
                 ("Mesa", [
-                    ("2016-12", "etnaviv", "Driver introduced"),
+                    ("2016-12", "etnaviv", "Driver added"),
                     ("2017-11", "etnaviv", "GC7000"),
                 ]),
                 ("Reverse Engineering", [
