@@ -186,7 +186,14 @@ def writeTimelineVendor(span, vendor):
 
 def getEntryInt(entry):
     date = entry[0]
-    dateInt = int(date.split('-')[0]) * 12 + int(date.split('-')[1])
+    year = int(date.split('-')[0])
+    month = int(date.split('-')[1])
+    day = 0
+    try:
+        day = int(date.split('-')[2])
+    except IndexError:
+        pass
+    dateInt = year*12*31 + month*31 + day
     print("getEntryInt() {} {} - {}".format(entry[2],entry[0], dateInt))
     return dateInt
 
