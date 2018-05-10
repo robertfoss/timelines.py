@@ -32,8 +32,8 @@ grade_height = line_grade_height * 0.7
 
 text_angle = -25
 
-label_margin = 50
-peg_margin = 10
+label_margin = 40
+peg_margin = 20
 label_x_pos_prev = 0
 peg_x_pos_prev = 0
 
