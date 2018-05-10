@@ -312,6 +312,8 @@ timelines = [
     ("Broadcom", [
                 ("Kernel", [
                     ("2015-03", "vc4", "VC4"),
+                    ("2018-05-10", "v3d", "VC5 & VC6"),
+
                 ]),
 
                 ("Mesa", [
