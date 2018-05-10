@@ -318,7 +318,7 @@ timelines = [
     ("Broadcom", [
                 ("Kernel", [
                     ("2015-03", "vc4", "VC4"),
-                    ("2018-05-10", "v3d", "VC5 & VC6"),
+#                    ("2018-05-10", "v3d", "VC5 & VC6"),
 
                 ]),
 
@@ -400,6 +400,7 @@ timelines = [
                 ]),
 
                 ("Mesa", [
+                    ("2012-10", "freedreno", "Driver added"),
                     ("2012-10", "freedreno", "A200"),
                     ("2013-05", "freedreno", "A300"),
                     ("2014-07", "freedreno", "A400"),
@@ -415,11 +416,15 @@ timelines = [
     ("Vivante", [
                 ("Kernel", [
                     ("2015-12", "etnaviv", "Driver added"),
+                    ("2015-12-03", "etnaviv", "GC2000"),
                     ("2016-01", "etnaviv", "GC3000"),
+                    ("2018-01-22", "etnaviv", "GC7000"),
                 ]),
 
                 ("Mesa", [
                     ("2016-12", "etnaviv", "Driver added"),
+                    ("2016-12", "etnaviv", "GC2000"),
+                    ("2016-12", "etnaviv", "GC3000"),
                     ("2017-11", "etnaviv", "GC7000"),
                 ]),
                 ("Reverse Engineering", [
