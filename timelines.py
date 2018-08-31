@@ -286,7 +286,8 @@ timelines = [
                     ("2013-06", "radeon", "Sea Islands"),
                     ("2016-03", "amdgpu", "Polaris 10 & 11"),
                     ("2016-11", "amdgpu", "Vega 10"),
-                    ("2016-12", "amdgpu", "Polaris 12"),
+                    ("2016-12-14", "amdgpu", "Polaris 12"),
+                    ("2017-09-26", "amdgpu", "Vega 12"),
                 ]),
                 ("Mesa", [
                     ("2010-05", "r600", "r600"),
@@ -297,20 +298,24 @@ timelines = [
                     ("2015-11", "radeonsi", "Polaris 10 & 11"),
                     ("2016-12", "radeonsi", "Polaris 12"),
                     ("2016-12", "radeonsi", "Vega 10"),
+                    ("2018-03-28", "radeonsi", "Vega 12"),
+                    ("2018-07-12", "radeonsi", "Vega 20"),
+
                 ]),
         ]
     ),
     ("ARM", [
                 ("Kernel", [
-
+                    ("2018-05-14", "lima", "Mali-4xx driver created"), # https://gitlab.freedesktop.org/lima/linux/commit/ac9d3fa76c365fe89b6cf3bdfda42fe84bd299e2
                 ]),
 
                 ("Mesa", [
-
+                    ("2017-06-09", "lima", "Mali-4xx driver created"), # https://gitlab.freedesktop.org/lima/mesa/commit/be6749c1f3785300fafdba65264671af0a5f4aa7
                 ]),
                 ("Reverse Engineering", [
-                    ("2017-04", "panfrost", "Gxx Documentation"),
+                    ("2012-02", "lima", "Mali-2/4xx prototyping"), # Luc Verhaegen https://www.youtube.com/watch?v=MvRJ_8K8baI
                     ("2017-06", "panfrost", "Gxx Shader Loader"),
+                    ("2017-06-09", "lima", "Mali-4xx driver"), # https://gitlab.freedesktop.org/lima/mesa/commit/be6749c1f3785300fafdba65264671af0a5f4aa7
                     ("2018-02", "panfrost", "T7xx Initial 3D"),
                 ]),
         ]
@@ -318,13 +323,14 @@ timelines = [
     ("Broadcom", [
                 ("Kernel", [
                     ("2015-03", "vc4", "VC4"),
-#                    ("2018-05-10", "v3d", "VC5 & VC6"),
+                    ("2018-04-30", "v3d", "V3D"),
 
                 ]),
 
                 ("Mesa", [
                     ("2014-06", "vc4", "VC4"),
-                    ("2017-02", "vc5", "VC5"),
+                    ("2018-02-02", "vc5", "VC5"),
+                    ("2018-05-01", "v3d", "VC5"),
                 ]),
                 ("Reverse Engineering", [
 
@@ -351,6 +357,7 @@ timelines = [
                     ("2013-02", "i915", "Gen9 Skylake"),
                     ("2013-11", "i915", "Gen8 Broadwell"),
                     ("2017-06", "i915", "Gen10 Cannonlake"),
+                    ("2018-02-15", "i915", "Gen11 Ice Lake"),
                 ]),
 
                 ("Mesa", [
@@ -359,6 +366,7 @@ timelines = [
                     ("2013-02", "i915", "Gen9 Skylake"),
                     ("2013-11", "i915", "Gen8 Broadwell"),
                     ("2017-05", "i915", "Gen10 Cannonlake"),
+                    ("2018-03-02", "i915", "Gen11 Ice Lake"),
                 ]),
                 ("Reverse Engineering", [
 
@@ -385,8 +393,11 @@ timelines = [
                 ("Reverse Engineering", [
                     ("2010-04", "envytools", "Fermi"),
                     ("2012-03", "envytools", "Kepler"),
+                    ("2012-03", "grate", "Tegra"), # https://github.com/grate-driver/grate/commit/5386da0e6dee8840cf0441ffe2c9ec916f243350
                     ("2014-06", "envytools", "Maxwell"),
                     ("2016-06", "envytools", "Pascal"),
+                    ("2018-03-30", "envytools", "Pascal"),
+
                 ]),
         ]
     ),
@@ -397,11 +408,12 @@ timelines = [
                     ("2013-07", "msm", "A300"),
                     ("2014-09", "msm", "A400"),
                     ("2016-11", "msm", "A500"),
+                    ("2018-08-06", "msm", "A600"),
                 ]),
 
                 ("Mesa", [
-                    ("2012-10", "freedreno", "Driver added"),
-                    ("2012-10", "freedreno", "A200"),
+                    ("2012-10-01", "freedreno", "Driver added"),
+                    ("2012-10-02", "freedreno", "A200"),
                     ("2013-05", "freedreno", "A300"),
                     ("2014-07", "freedreno", "A400"),
                     ("2016-11", "freedreno", "A500"),
